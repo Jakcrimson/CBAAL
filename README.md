@@ -9,3 +9,5 @@ U /"___|U | __")uU  /"\  u U  /"\  u  |"|
   CONSENSUS-BASED AUCTION ALGORITHM LIBRARY
             by Pierre LAGUE
 ```
+
+This is the main repository for my end-of-year project for my first year of Masters degree in Machine Learning at the University of Lille.

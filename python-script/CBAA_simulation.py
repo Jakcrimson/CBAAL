@@ -25,6 +25,7 @@ def simulation(task_num, agent_num, max_t, save_gif, topology):
 
     net = Network_Topology()
     #topology TODO : limit the number of communications between the agents to log(num_agents) or study the KNN communication process
+    #  This limits the network topologies that can be used since a connected network is required between the agents in order to route all of the bid information.
     G = None
     pos = None
     match topology:
