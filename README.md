@@ -10,7 +10,7 @@ U /"___|U | __")uU  /"\  u U  /"\  u  |"|
             by Pierre LAGUE
 ```
 
-**CBAAL - Consensus Based Auction Algorithm Library**
+# CBAAL - Consensus Based Auction Algorithm Library
 
 ## Overview
 
@@ -60,7 +60,7 @@ CBAAL is a library developed as part of my end-of-year assignment for my first-y
    ```
 
 After a simulation a gif will be saved showing you the process of the task assignement : 
-![]([my_gif/mygif.gif](https://github.com/Jakcrimson/CBAAL/blob/master/my_gif/mygif.gif))
+![](https://github.com/Jakcrimson/CBAAL/blob/master/my_gif/mygif.gif)
 
 ## Documentation
 
@@ -80,8 +80,6 @@ We would like to express our gratitude to Choi et al [https://dspace.mit.edu/bit
 
 ## Contact
 
-For any inquiries or questions regarding the library, please contact [your email address]. 📧
+For any inquiries or questions regarding the library, please contact [pierre.lague @ protonmail.com]. 📧
 
 ---
-
-**Disclaimer**: This library is provided as-is without any warranties. Use at your own discretion. 🚨🔒
