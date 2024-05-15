@@ -1,6 +1,5 @@
 """
 @new version : Pierre Lague
-@plots and structure : keep9oing (@ github)
 """
 from network_topology import Network_Topology
 import numpy as np
