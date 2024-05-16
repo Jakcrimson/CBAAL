@@ -54,7 +54,7 @@ def simulation(task_num, agent_num, max_t, save_gif, topology):
     filenames = []    
     #----------------------------------------------------------------------+
 
-    fig, ax = plt.subplots(figsize=(20, 20))
+    fig, ax = plt.subplots(figsize=(12, 6))
     ax.set_xlim((-0.1,1.1))
     ax.set_ylim((-0.1,1.1))
     ax.plot(task[:,0],task[:,1],'ro',label="Task")
@@ -138,7 +138,7 @@ def simulation(task_num, agent_num, max_t, save_gif, topology):
 
 
     if save_gif:
-        filename = f'./my_gif/{t}_F.png'
+        filename = f'../my_gif/{t}_F.png'
         filenames.append(filename)
         fig.savefig(filename)
 
@@ -147,7 +147,7 @@ def simulation(task_num, agent_num, max_t, save_gif, topology):
         for filename in filenames:
             image = imageio.imread(filename)
             files.append(image)
-        imageio.mimsave("./my_gif/mygif.gif", files, format='GIF', fps=1)
+        imageio.mimsave("../my_gif/mygif.gif", files, format='GIF', fps=1)
         with imageio.get_writer('./my_gif/mygif.gif', mode='I') as writer:
             for filename in filenames:
                 image = imageio.imread(filename)
