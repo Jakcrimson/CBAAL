@@ -10,7 +10,10 @@ U /"___|U | __")uU  /"\  u U  /"\  u  |"|
             by Pierre LAGUE
 ```
 ![](https://github.com/Jakcrimson/CBAAL/blob/master/python-script/my_gif/CBBA_simulation.gif)
-> Simulation of the CBBA algorithm on a ring topology network.
+> Simulation of the CBBA algorithm on a ring topology network. Multi-Task Assignement
+
+![](https://github.com/Jakcrimson/CBAAL/blob/master/python-script/my_gif/CBAA_simulation.gif)
+> Simulation of the CBAA algorithm on a fully connected topology network. Single-Task Assignement
 
 # CBAAL - Consensus Based Auction Algorithm Library
 
