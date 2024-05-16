@@ -55,8 +55,8 @@ During phase 1 of the algorithm, each agent continuously adds tasks to its bundl
 The authors define $S_i^{p_i} the total reward value for the agent $i$ performing the tasks along the path $p_i$. They also mention the notion of marginal score improvement when a task is added to the bundle, which we will not discuss here. In the end, each agent carries four vectors: 
 - a winning bid list $y_i \in \mathbb{R}_+^{N_t}$
 - a winning agent list $z_i \in \mathbb{I}^{N_t}$
-- a bundle $b_i \in (\mathbb{J} \bigcup \{\empty\})^{L_t}$
-- a path $p_i \in (\mathbb{J} \bigcup \{\empty\})^{L_t}$
+- a bundle $b_i \in (\mathbb{J} \bigcup \{\emptyset \})^{L_t}$
+- a path $p_i \in (\mathbb{J} \bigcup \{\emptyset \})^{L_t}$
 In CBBA, each agent needs information about not only whether or not it is outbid on the task it selects but also who is assigned to each task; this enables better assignments based on more sophisticated conflict resolution rules.
 
 
@@ -73,7 +73,7 @@ $$
 
 where $\tau _r$ id the message reception time. When agent $i$ receives a message from another agent $k$, $z_i$ and $s_i$ are used to determine which agent's information is the most up-to-date for each task. There are three possible actions agent $i$ can take on task $j$ : 
 - update: $y_{ij} = y_{kj}$, $z_{ij}=z_{kj}$
-- reset: $y_{ij} = 0$, $z_{ij} = \empty$
+- reset: $y_{ij} = 0$, $z_{ij} = \emptyset $
 - leave: $y_{ij} = y_{ij}$, $z_{ij} = z_{ij}$
 
 The authors define 17 decision rules based on the situation an agent might find himself in. Each of these rules are implemented in the `CBBA_algorithm.py` file
