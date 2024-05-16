@@ -9,7 +9,8 @@ U /"___|U | __")uU  /"\  u U  /"\  u  |"|
   CONSENSUS-BASED AUCTION ALGORITHM LIBRARY
             by Pierre LAGUE
 ```
-![]https://github.com/Jakcrimson/CBAAL/blob/master/python-script/my_gif/CBBA_simulation.gif
+![](https://github.com/Jakcrimson/CBAAL/blob/master/python-script/my_gif/CBBA_simulation.gif)
+> Simulation of the CBBA algorithm on a ring topology network.
 
 # CBAAL - Consensus Based Auction Algorithm Library
 
