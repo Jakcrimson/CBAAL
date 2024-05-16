@@ -1,5 +1,6 @@
 """
 @author: Pierre Lague
+@older version credit: keep9oing
 """
 
 from CBBA_algorithm import CBBA_agent
