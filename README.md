@@ -34,13 +34,9 @@ An unnasigned agent $i$ will compute the valid task list $h_i$. If there are val
 
 ### Phase 2 : Consensus Process
 
-The second phase of the CBAA is the consensus section of
-the algorithm. Here, agents make use of a consensus strategy
-to converge on the list of winning bids, and use that list to
-determine the winner. This allows conflict resolution over all
-tasks while not limiting the network to a specific structure *(this assumption is debatable and will be pu in perspective in the results).* 
+The second phase of the CBAA is the consensus section of the algorithm. Here, agents make use of a consensus strategy to converge on the list of winning bids, and use that list to determine the winner. This allows conflict resolution over all tasks while not limiting the network to a specific structure.
 
-The simulation uses a network represented as a graph and its adjacency matrix. The network $\mathbb{G}(\tau)$, is the undirected communication network at time $\tau$ with a symetric adjacency matrix $g(\tau)$. This adjacency matrix is defined such that $$g(\tau)_{ik}=1$$ if a link exists between agents $i$ and $k$, and 0 otherwise. Agents $i$ and $k$ are said to be *neighbors* if such a link exists. For the implementation and as convention, each agent is a neighbor to himself (self connection nodes, $g(\tau)_{ii}=1$).
+The simulation uses a network represented as a graph and its adjacency matrix. The network $\mathbb{G}(\tau)$, is the undirected communication network at time $\tau$ with a symetric adjacency matrix $g(\tau)$. This adjacency matrix is defined such that $g(\tau)_{ik}=1$ if a link exists between agents $i$ and $k$, and 0 otherwise. Agents $i$ and $k$ are said to be *neighbors* if such a link exists. For the implementation and as convention, each agent is a neighbor to himself (self connection nodes, $g(\tau)_{ii}=1$).
 
 At each iteration of phase 2, each agents receives, and transmits their winning bid list $y_i$ and the consensus is reached in a way that each agent $i$ replaces its $y_ij$ values with the largest value between itself and its neighbors. Also, if an agent is outbid, it looses it's assignement and jumps back to phase 1.
 
