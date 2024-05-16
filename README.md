@@ -38,7 +38,7 @@ The second phase of the CBAA is the consensus section of the algorithm. Here, ag
 
 The simulation uses a network represented as a graph and its adjacency matrix. The network $\mathbb{G}(\tau)$, is the undirected communication network at time $\tau$ with a symetric adjacency matrix $g(\tau)$. This adjacency matrix is defined such that $g_{ik}=1$ if a link exists between agents $i$ and $k$, and 0 otherwise. Agents $i$ and $k$ are said to be *neighbors* if such a link exists. For the implementation and as convention, each agent is a neighbor to himself (self connection nodes, $g(\tau)_{ii}=1$).
 
-At each iteration of phase 2, each agents receives, and transmits their winning bid list $y_i$ and the consensus is reached in a way that each agent $i$ replaces its $y_ij$ values with the largest value between itself and its neighbors. Also, if an agent is outbid, it looses it's assignement and jumps back to phase 1.
+At each iteration of phase 2, each agents receives, and transmits their winning bid list $y_i$ and the consensus is reached in a way that each agent $i$ replaces its $y_{ij}$ values with the largest value between itself and its neighbors. Also, if an agent is outbid, it looses it's assignement and jumps back to phase 1.
 
 
 ## CBBA - Consensus-Based Bundle Algorithm - Multi-Task Assignement
@@ -47,10 +47,38 @@ Choi et al. define CBBA as an extension to the single-assignment problem. In CBB
 
 ### Phase 1 : Bundle Construction
 
-During phase 1 of the algorithm, each agent continuously adds tasks to its bundle until it is incapable of adding any others. The tasks are added into the bundle in the following way. 
-- each agent 
+During phase 1 of the algorithm, each agent continuously adds tasks to its bundle until it is incapable of adding any others. The tasks are added into the bundle in the following way, until it has reached a final condition. 
+- each agent carries two types of lists of tasks both of cardinalty inferior to $L_t$, the maximum assignement number:
+   - the bundle $b_i$, tasks are ordered based on which ones were first added.
+   - the path $p_i$, tasks are ordered based on their location in the assignement.
 
-## Features
+The authors define $S_i^{p_i} the total reward value for the agent $i$ performing the tasks along the path $p_i$. They also mention the notion of marginal score improvement when a task is added to the bundle, which we will not discuss here. In the end, each agent carries four vectors: 
+- a winning bid list $y_i \in \mathbb{R}_+^{N_t}$
+- a winning agent list $z_i \in \mathbb{I}^{N_t}$
+- a bundle $b_i \in (\mathbb{J} \bigcup \{\empty\})^{L_t}$
+- a path $p_i \in (\mathbb{J} \bigcup \{\empty\})^{L_t}$
+In CBBA, each agent needs information about not only whether or not it is outbid on the task it selects but also who is assigned to each task; this enables better assignments based on more sophisticated conflict resolution rules.
+
+
+### Phase 2 : Conflict Resolution
+In CBAA, agents bid on a single task and release it upon receiving a higher value in the winning bids list. On the contrary, in CBBA, agents add tasks to their bundle based on their currently assigned task set. Suppose that an agent is outbid for a task and thus releases it; then, the marginal score
+values for the tasks added to the bundle after this task are no longer valid. Therefore, the agent also needs to release all the tasks added after the outbid task. Otherwise, the agent will make further decisions based on wrong score values, which may lead to poor performance.
+
+In the multi-assignment consensus stage, three vectors are communicated for consensus. Two were described in the bundle construction phase: the winning bids list $y_i$ Nt and the winning agent list $z_i$. The third vector $s_i \in \mathbb{R}^{N_u}, with $N_u$ the number of agents, represents the time stamp of the last information update from each of the other agents. Each time a message is passed, the time vector is populated with
+
+$$
+s_{i k}= \begin{cases}\tau_r, & \text { if } g_{i k}=1 \\ \max _{m: g_{i m}=1} s_{m k}, & \text { otherwise }\end{cases}
+$$
+
+
+where $\tau _r$ id the message reception time. When agent $i$ receives a message from another agent $k$, $z_i$ and $s_i$ are used to determine which agent's information is the most up-to-date for each task. There are three possible actions agent $i$ can take on task $j$ : 
+- update: $y_{ij} = y_{kj}$, $z_{ij}=z_{kj}$
+- reset: $y_{ij} = 0$, $z_{ij} = \empty$
+- leave: $y_{ij} = y_{ij}$, $z_{ij} = z_{ij}$
+
+The authors define 17 decision rules based on the situation an agent might find himself in. Each of these rules are implemented in the `CBBA_algorithm.py` file
+
+## Features of the project
 
 - Implementation of CBAA and CBBA algorithms.
 - Designed for dynamic load balancing scenarios.
