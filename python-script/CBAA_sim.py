@@ -65,9 +65,9 @@ class CBAA():
         fig, ax = plt.subplots(figsize=(12, 6))
         ax.set_xlim((-0.1,1.1))
         ax.set_ylim((-0.1,1.1))
-        ax.plot(task[:,0],task[:,1],'ro',label="Task")
+        ax.plot(task[:,0],task[:,1],'r^',label="Task")
         robot_pos = np.array([r.position[0].tolist() for r in agent_list])
-        ax.plot(robot_pos[:,0],robot_pos[:,1],'b^',label="Robot")
+        ax.plot(robot_pos[:,0],robot_pos[:,1],'go',label="Robot")
         
         for i in range(agent_num-1):
             for j in range(i+1,agent_num):
