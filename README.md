@@ -9,6 +9,7 @@ U /"___|U | __")uU  /"\  u U  /"\  u  |"|
   CONSENSUS-BASED AUCTION ALGORITHM LIBRARY
             by Pierre LAGUE
 ```
+![]https://github.com/Jakcrimson/CBAAL/blob/master/python-script/my_gif/CBBA_simulation.gif
 
 # CBAAL - Consensus Based Auction Algorithm Library
 
@@ -101,8 +102,7 @@ The authors define 17 decision rules based on the situation an agent might find 
    pip install -r requirements.txt
    ```
 
-After a simulation a gif will be saved showing you the process of the task assignement : 
-![](https://github.com/Jakcrimson/CBAAL/blob/master/python-script/my_gif/simulation.gif)
+
 
 ## Documentation
 
