@@ -40,27 +40,8 @@ CBAAL is a library developed as part of my end-of-year assignment for my first-y
    pip install -r requirements.txt
    ```
 
-## Usage
-
-1. Import the necessary modules:
-   ```python
-   from cbaal import CBAA, CBBA
-   ```
-
-2. Initialize the algorithms with appropriate parameters:
-   ```python
-   cbaa = CBAA(...)
-   cbba = CBBA(...)
-   ```
-
-3. Run the algorithms with your specific data:
-   ```python
-   cbaa_result = cbaa.simulation(...)
-   cbba_result = cbba.simulation(...)
-   ```
-
 After a simulation a gif will be saved showing you the process of the task assignement : 
-![](https://github.com/Jakcrimson/CBAAL/blob/master/my_gif/mygif.gif)
+![](https://github.com/Jakcrimson/CBAAL/blob/master/python-script/my_gif/simulation.gif)
 
 ## Documentation
 

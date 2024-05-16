@@ -138,17 +138,17 @@ def simulation(task_num, agent_num, max_t, save_gif, topology):
 
 
     if save_gif:
-        filename = f'../my_gif/{t}_F.png'
+        filename = f'./my_gif/{t}_F.png'
         filenames.append(filename)
         fig.savefig(filename)
-
+    
         #build gif
         files=[]
         for filename in filenames:
             image = imageio.imread(filename)
             files.append(image)
-        imageio.mimsave("../my_gif/mygif.gif", files, format='GIF', fps=1)
-        with imageio.get_writer('./my_gif/mygif.gif', mode='I') as writer:
+        imageio.mimsave("./my_gif/simulation.gif", files, format='GIF', fps=1)
+        with imageio.get_writer('./my_gif/simulation.gif', mode='I') as writer:
             for filename in filenames:
                 image = imageio.imread(filename)
                 writer.append_data(image)
