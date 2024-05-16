@@ -155,8 +155,8 @@ class CBAA():
             for filename in filenames:
                 image = imageio.imread(filename)
                 files.append(image)
-            imageio.mimsave("./my_gif/simulation.gif", files, format='GIF', fps=1)
-            with imageio.get_writer('./my_gif/simulation.gif', mode='I') as writer:
+            imageio.mimsave("./my_gif/CBAA_simulation.gif", files, format='GIF', fps=1)
+            with imageio.get_writer('./my_gif/CBAA_simulation.gif', mode='I') as writer:
                 for filename in filenames:
                     image = imageio.imread(filename)
                     writer.append_data(image)
