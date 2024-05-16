@@ -66,9 +66,8 @@ values for the tasks added to the bundle after this task are no longer valid. Th
 
 In the multi-assignment consensus stage, three vectors are communicated for consensus. Two were described in the bundle construction phase: the winning bids list $y_i$ Nt and the winning agent list $z_i$. The third vector $s_i \in \mathbb{R}^{N_u}, with $N_u$ the number of agents, represents the time stamp of the last information update from each of the other agents. Each time a message is passed, the time vector is populated with
 
-$$
-s_{i k}= \begin{cases}\tau_r, & \text { if } g_{i k}=1 \\ \max _{m: g_{i m}=1} s_{m k}, & \text { otherwise }\end{cases}
-$$
+- $s_{i k}= \tau_r \text { if } g_{i k}=1$
+- $s_{ik} =  \max _{m: g_{i m}=1} s_{m k}\text { otherwise }$
 
 
 where $\tau _r$ id the message reception time. When agent $i$ receives a message from another agent $k$, $z_i$ and $s_i$ are used to determine which agent's information is the most up-to-date for each task. There are three possible actions agent $i$ can take on task $j$ : 
