@@ -62,7 +62,7 @@ class CBAA():
         filenames = []    
         #----------------------------------------------------------------------+
 
-        fig, ax = plt.subplots(figsize=(12, 6))
+        fig, ax = plt.subplots()
         ax.set_xlim((-0.1,1.1))
         ax.set_ylim((-0.1,1.1))
         ax.plot(task[:,0],task[:,1],'r^',label="Task")
