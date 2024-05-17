@@ -32,7 +32,7 @@ class CBBA_agent():
     self.s = {a:self.time_step for a in range(self.agent_num)}
 
     # This part can be modified depend on the problem
-    self.state = np.random.uniform(low=0, high=1, size=(1,2)) # Agent State (Position)
+    self.position = np.random.uniform(low=0, high=1, size=(1,2)) # Agent position (Position)
     self.c = np.zeros(self.task_num) # Initial Score (Euclidean Distance)
 
     # socre function parameters
@@ -44,11 +44,11 @@ class CBBA_agent():
     # This function can be used in later
     pass
 
-  def set_state(self, state):
+  def set_position(self, position):
     """
-    Set state of agent
+    Set position of agent
     """
-    self.state = state
+    self.position = position
 
   def send_message(self):
     """
@@ -74,7 +74,7 @@ class CBBA_agent():
       S_p = 0
       if len(self.p) > 0:
         distance_j = 0
-        distance_j += np.linalg.norm(self.state.squeeze()-task[self.p[0]])
+        distance_j += np.linalg.norm(self.position.squeeze()-task[self.p[0]])
         S_p += (self.Lambda**(distance_j/self.vel)) * self.c_bar[self.p[0]]
         for p_idx in range(len(self.p)-1):
           distance_j += np.linalg.norm(task[self.p[p_idx]]-task[self.p[p_idx+1]])
@@ -92,7 +92,7 @@ class CBBA_agent():
             p_temp.insert(n,j)
             c_temp = 0
             distance_j = 0
-            distance_j += np.linalg.norm(self.state.squeeze()-task[p_temp[0]])
+            distance_j += np.linalg.norm(self.position.squeeze()-task[p_temp[0]])
             c_temp += (self.Lambda**(distance_j/self.vel)) * self.c_bar[p_temp[0]]
             if len(p_temp) > 1:
               for p_loc in range(len(p_temp)-1):
@@ -325,8 +325,8 @@ if __name__=="__main__":
   # task = np.array([[0,1],[1,1],[1,2]])
 
   robot_list = [CBBA_agent(id=i, vel=1, task_num=task_num, agent_num=robot_num, L_t=task.shape[0]) for i in range(robot_num)]
-  # robot_list[0].state = np.array([[0,0]])
-  # robot_list[1].state = np.array([[1,0]])
+  # robot_list[0].position = np.array([[0,0]])
+  # robot_list[1].position = np.array([[1,0]])
 
   # Network Initialize
   G = np.ones((robot_num, robot_num)) # Fully connected network

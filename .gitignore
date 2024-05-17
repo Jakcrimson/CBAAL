@@ -4,3 +4,10 @@
 /python-script/__pycache__
 /python-script/test.ipynb
 /python-script/__pycache__/*
+/python-script/simulations/__pycache__
+/python-script/simulations/algorithms/__pycache__
+/python-script/simulations/utils/__pycache__
+/python-script/simulations/my_gif
+/python-script/simulations/*_simulation*
+/.vscode/
+/python-script/__pycache__

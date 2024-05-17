@@ -1,7 +1,6 @@
 """
 @new version : Pierre Lague
 """
-from network_topology import Network_Topology
 import numpy as np
 from scipy.spatial import distance_matrix
 import copy

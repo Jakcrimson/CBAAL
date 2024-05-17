@@ -96,11 +96,11 @@ In the multi-assignment consensus stage, three vectors are communicated for cons
 
 
 where $\tau _r$ id the message reception time. When agent $i$ receives a message from another agent $k$, $z_i$ and $s_i$ are used to determine which agent's information is the most up-to-date for each task. There are three possible actions agent $i$ can take on task $j$ : 
-- update: $y_{ij} = y_{kj}$, $z_{ij}=z_{kj}$
+- update: $y_{ij} = y_{kj}$, $z_{ij}=z_{kj}$ -> the new task added is the one kept
 - reset: $y_{ij} = 0$, $z_{ij} = \emptyset $
-- leave: $y_{ij} = y_{ij}$, $z_{ij} = z_{ij}$
+- leave: $y_{ij} = y_{ij}$, $z_{ij} = z_{ij}$ -> the agent doesn't take the new task
 
-The authors define 17 decision rules based on the situation an agent might find itself in. Each of these rules are implemented in the `CBBA_algorithm.py` file.
+This notion of belief is important but adds more complexity to the problem. The authors define 17 decision rules based on the situation an agent might find itself in. If a bid is changed by the decision rules in Table I, each agent checks if any of the updated or reset tasks were in their bundle, and if so, those tasks, along with all of the tasks that were added to the bundle after them, are released. From here, the algorithm returns to the first phase and new tasks are added
 
 ## Features of the project
 

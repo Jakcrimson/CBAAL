@@ -54,7 +54,7 @@ class Network_Topology():
         adjacency_matrix = np.ones((num_nodes, num_nodes))
         node_positions = np.random.uniform(low=0, high=1, size=(1, 2))
 
-        return adjacency_matrix, node_positions
+        return adjacency_matrix
 
     def get_ring_network_topology(self, num_nodes):
         """

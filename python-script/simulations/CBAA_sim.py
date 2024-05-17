@@ -3,9 +3,9 @@
 CBAA is considered to be a specific case of CBBA where the bundle is composed on only one task.
 """
 
-from CBAA_algorithm import CBAA_agent
-from Task import Task
-from network_topology import Network_Topology
+from algorithms.CBAA_algorithm import CBAA_agent
+from utils.Task import Task
+from utils.network_topology import Network_Topology
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 import imageio.v2 as imageio

@@ -3,14 +3,14 @@
 @older version credit: keep9oing
 """
 
-from CBBA_algorithm import CBBA_agent
-from Task import Task
+from algorithms.CBBA_algorithm import CBBA_agent
+from utils.Task import Task
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 import imageio
 import os
-from network_topology import Network_Topology
+from utils.network_topology import Network_Topology
 
 np.random.seed(3)
 
@@ -66,7 +66,7 @@ class CBBA():
     ax.set_xlim((-0.1,1.1))
     ax.set_ylim((-0.1,1.1))
     ax.plot(task[:,0],task[:,1],'r^',label="Task")
-    robot_pos = np.array([r.state[0].tolist() for r in agent_list])
+    robot_pos = np.array([r.position[0].tolist() for r in agent_list])
     ax.plot(robot_pos[:,0],robot_pos[:,1],'go',label="Robot")
 
     for i in range(agent_num-1):
@@ -97,11 +97,11 @@ class CBBA():
 
         ## Plot
         if len(robot.p) > 0:
-          x_data=[robot.state[0][0]]+task[robot.p,0].tolist()
-          y_data=[robot.state[0][1]]+task[robot.p,1].tolist()
+          x_data=[robot.position[0][0]]+task[robot.p,0].tolist()
+          y_data=[robot.position[0][1]]+task[robot.p,1].tolist()
         else:
-          x_data=[robot.state[0][0]]
-          y_data=[robot.state[0][1]]
+          x_data=[robot.position[0][0]]
+          y_data=[robot.position[0][1]]
         if t == 0:
           assign_line, = ax.plot(x_data,y_data,'k-',linewidth=1)
           assign_plots.append(assign_line)
@@ -121,7 +121,11 @@ class CBBA():
       ## Communication stage
       print("Communicating...")
       # Send winning bid list to neighbors (depend on env)
-      message_pool = [robot.send_message() for robot in agent_list]
+      censoring = np.random.random()
+      if censoring >= 0.5:
+        message_pool = [robot.send_message() for robot in agent_list]
+      else:
+        message_pool = [robot.send_message() for robot in agent_list]
 
       for robot_id, robot in enumerate(agent_list):
         # Recieve winning bidlist from neighbors
@@ -148,11 +152,11 @@ class CBBA():
 
         ## Plot
         if len(robot.p) > 0:
-          x_data=[robot.state[0][0]]+task[robot.p,0].tolist()
-          y_data=[robot.state[0][1]]+task[robot.p,1].tolist()
+          x_data=[robot.position[0][0]]+task[robot.p,0].tolist()
+          y_data=[robot.position[0][1]]+task[robot.p,1].tolist()
         else:
-          x_data=[robot.state[0][0]]
-          y_data=[robot.state[0][1]]
+          x_data=[robot.position[0][0]]
+          y_data=[robot.position[0][1]]
 
         assign_plots[robot_id].set_data(x_data,y_data)
 
