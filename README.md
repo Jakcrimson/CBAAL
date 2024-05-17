@@ -43,7 +43,7 @@ The second phase of the CBAA is the consensus section of the algorithm. Here, ag
 
 The simulation uses a network represented as a graph and its adjacency matrix. The network $\mathbb{G}(\tau)$, is the undirected communication network at time $\tau$ with a symetric adjacency matrix $g(\tau)$. This adjacency matrix is defined such that $g_{ik}=1$ if a link exists between agents $i$ and $k$, and 0 otherwise. Agents $i$ and $k$ are said to be *neighbors* if such a link exists. For the implementation and as convention, each agent is a neighbor to himself (self connection nodes, $g(\tau)_{ii}=1$).
 
-At each iteration of phase 2, each agents receives, and transmits their winning bid list $y_i$ and the consensus is reached in a way that each agent $i$ replaces its $y_{ij}$ values with the largest value between itself and its neighbors. Also, if an agent is outbid, it looses it's assignement and jumps back to phase 1.
+At each iteration of phase 2, each agents receives, and transmits their winning bid list $y_i$ and the consensus is reached in a way that each agent $i$ replaces its $y_{ij}$ values with the largest value between itself and its neighbors. Also, if an agent is outbid, it looses it's assignement and jumps back to phase 1.   
 
 
 ## CBBA - Consensus-Based Bundle Algorithm - Multi-Task Assignement
@@ -62,6 +62,26 @@ The authors define $S_i^{p_i} the total reward value for the agent $i$ performin
 - a winning agent list $z_i \in \mathbb{I}^{N_t}$
 - a bundle $b_i \in (\mathbb{J} \bigcup \{\emptyset \})^{L_t}$
 - a path $p_i \in (\mathbb{J} \bigcup \{\emptyset \})^{L_t}$
+
+If a task $j$ is added to the bundle, it incurs the marginal score improvement of 
+
+- $c_{ij}[b_i]$ = 0 if the task $j$ is already in the bundle $b_i$.
+- $c_{ij}[b_i] =  max_{n \leq |p_i|} S_{i}^{p_i \oplus _n\{j\}} - S_{i}^{p_i} \text { otherwise }$
+
+In other words, the CBBA scoring scheme inserts a new task to the location tha incurs the largest score improvement **after** the task was inserted in the bundle vs before it was inserted, and this value becomes the marginal score associated to that task given the current path. Naturally, if the task is already in the path, then it brings no improvement in score.
+
+The score function is initialized as $S_i^{\{\emptyset\}}$ = 0, while the path $p_i$ and bundle $b_i$ are recursively updated as 
+
+$$b_i = b_i \oplus _{end} \{J_i\}, p_i = p_i \oplus _{n_i, J_i} \{J_i\}$$
+where :
+- $J_i = argmax (c_{ij[b_i]} \times h_{ij})$ -> the index of the task that maximizes the score improvement.
+- $n_{i,J_i} = argmax_n S_i^{p_i \oplus _n \{J_i\}}$ -> the index of at which the task to be added maximises the marginal score.
+- $h_{ij} = \mathbb{I}(c_{ij} > y_{ij})$ the valid tasks list, as defined earlier.
+
+The recursion continues until one of the following conditions is reached :
+- either $|b_i| = L_t$ -> reached maximum assignement number
+- or $h_i = 0$ -> the number of valid taks is 0
+
 In CBBA, each agent needs information about not only whether or not it is outbid on the task it selects but also who is assigned to each task; this enables better assignments based on more sophisticated conflict resolution rules.
 
 
@@ -80,7 +100,7 @@ where $\tau _r$ id the message reception time. When agent $i$ receives a message
 - reset: $y_{ij} = 0$, $z_{ij} = \emptyset $
 - leave: $y_{ij} = y_{ij}$, $z_{ij} = z_{ij}$
 
-The authors define 17 decision rules based on the situation an agent might find himself in. Each of these rules are implemented in the `CBBA_algorithm.py` file
+The authors define 17 decision rules based on the situation an agent might find itself in. Each of these rules are implemented in the `CBBA_algorithm.py` file.
 
 ## Features of the project
 
