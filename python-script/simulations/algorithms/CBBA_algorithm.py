@@ -11,7 +11,6 @@ class CBBA_agent():
 
     self.task_num = task_num
     self.agent_num = agent_num
-
     # Agent information
     self.id = id
     self.vel = vel

@@ -36,15 +36,15 @@ class CBBA():
     pos = None
     match topology:
         case 1:
-            G, pos = net.get_star_network_topology(agent_num) #does not allow single task assignement per agents because of the communication gaps between agents.
+            G = net.get_star_network_topology(agent_num) #does not allow single task assignement per agents because of the communication gaps between agents.
         case 2:
-            G, pos = net.get_fully_connected_network_topology(agent_num) #allows single task assignement per agents because all agents know what the others are doing.
+            G = net.get_fully_connected_network_topology(agent_num) #allows single task assignement per agents because all agents know what the others are doing.
         case 3:
-            G, pos = net.get_ring_network_topology(agent_num)#does not allow single task assignement per agents because of the communication gaps between agents.
+            G = net.get_ring_network_topology(agent_num)#does not allow single task assignement per agents because of the communication gaps between agents.
         case 4:
-            G, pos = net.get_mesh_network_topology(agent_num)#allows single task assignement per agents because all agents know what the others are doing.
+            G = net.get_mesh_network_topology(agent_num)#allows single task assignement per agents because all agents know what the others are doing.
         case 5:
-            G, pos = net.get_random_network_topology(agent_num, 0.5) #random based
+            G = net.get_random_network_topology(agent_num, 0.5) #random based
 
 
     #SIMULATION PARAMETERS
@@ -121,11 +121,7 @@ class CBBA():
       ## Communication stage
       print("Communicating...")
       # Send winning bid list to neighbors (depend on env)
-      censoring = np.random.random()
-      if censoring >= 0.5:
-        message_pool = [robot.send_message() for robot in agent_list]
-      else:
-        message_pool = [robot.send_message() for robot in agent_list]
+      message_pool = [robot.send_message() for robot in agent_list]
 
       for robot_id, robot in enumerate(agent_list):
         # Recieve winning bidlist from neighbors

@@ -39,7 +39,7 @@ class Network_Topology():
         adjacency_matrix[:, center_node] = 1
         np.fill_diagonal(adjacency_matrix, 1)
         node_positions = np.random.uniform(low=0, high=1, size=(1, 2))
-        return adjacency_matrix, node_positions
+        return adjacency_matrix
 
     def get_fully_connected_network_topology(self, num_nodes):
         """
@@ -74,7 +74,7 @@ class Network_Topology():
         # Generate arbitrary node positions
         node_positions = np.random.uniform(low=0, high=1, size=(1, 2))
     
-        return adjacency_matrix, node_positions
+        return adjacency_matrix
 
     def get_mesh_network_topology(self, num_nodes):
         """
@@ -93,7 +93,7 @@ class Network_Topology():
                     adjacency_matrix[i, j] = 1
         np.fill_diagonal(adjacency_matrix, 1)
         node_positions = np.random.uniform(low=0, high=1, size=(1, 2))
-        return adjacency_matrix, node_positions
+        return adjacency_matrix
 
     def get_random_network_topology(self, num_nodes, density):
         """
@@ -112,4 +112,4 @@ class Network_Topology():
         adjacency_matrix[adjacency_matrix <= threshold] = 1
         np.fill_diagonal(adjacency_matrix, 0)
         node_positions = np.random.uniform(low=0, high=1, size=(1, 2))
-        return adjacency_matrix, node_positions
+        return adjacency_matrix
