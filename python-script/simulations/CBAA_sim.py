@@ -15,7 +15,7 @@ import os
 
 np.random.seed(3)
 
-class CBAA():
+class CBAA_plot():
     def __init__(self):
         print("[+] CBAA Initialized...")
         

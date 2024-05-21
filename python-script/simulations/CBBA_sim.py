@@ -15,7 +15,7 @@ from utils.network_topology import Network_Topology
 np.random.seed(3)
 
 
-class CBBA():
+class CBBA_plot():
   def __init__(self):
     pass
 
