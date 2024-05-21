@@ -126,6 +126,38 @@ This notion of belief is important but adds more complexity to the problem. The 
    pip install -r requirements.txt
    ```
 
+## Execution
+
+The program `CBAAL.py` can be executed in command line with fully customizable parameters like so : 
+
+```bash
+ python CBAAL.py cbaa --nb_agents 5 --nb_tasks 20 --max_t 50 --topology 1 --viz gui
+```
+
+The parameters are defined as follows: 
+
+```
+usage: CBAAL.py [-h] [--nb_agents NB_AGENTS] [--nb_tasks NB_TASKS]
+                [--max_t MAX_T] [--topology TOPOLOGY] [--viz VIZ]
+                algorithm
+
+Simulation of Single/Multi-Task Assignement in a fleet of robots using
+Consensus-Based Algorithms
+
+positional arguments:
+  algorithm             Algorithm to execute CBAA/CBBA
+
+options:
+  -h, --help            show this help message and exit
+  --nb_agents NB_AGENTS
+                        number of agents in the simulation
+  --nb_tasks NB_TASKS   number of tasks in the simulation
+  --max_t MAX_T         maximum iteration
+  --topology TOPOLOGY   network topology [(1)star, (2)fc, (3)ring (4)mesh,
+                        (5)random]
+  --viz VIZ             If set to gui, displays the GUI viz, if not the plot
+                        viz
+```
 
 
 ## Documentation
