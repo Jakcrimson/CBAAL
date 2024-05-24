@@ -31,7 +31,7 @@ class CBAA_agent():
         
         #agent's bid on a task, which is a score here defined by the euclidean distance
         #it is possible to change the nature of the score to see if it impacts performance
-        self.c = -distance_matrix(self.position, J).squeeze()
+        self.c = -distance_matrix(self.position, J).squeeze() # tirer un avantage individuel en executant les taches
 
         #agent ID
         self.id = id
@@ -98,7 +98,7 @@ class CBAA_agent():
             converged = True
 
         return converged
-    
+
 
 
     def send_message_in_neighborhood(self):

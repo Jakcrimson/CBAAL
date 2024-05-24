@@ -46,9 +46,9 @@ CONSENSUS-BASED AUCTION ALGORITHMS LIBRARY
         if viz == "gui":
             CBAA().simulation(nb_tasks, nb_agents, max_t, topology)
         else:
-            CBAA_plot.simulation(nb_tasks, nb_agents, max_t, True, topology)
+            CBAA_plot().simulation(nb_tasks, nb_agents, max_t, True, 2)
     else:
         if viz == "gui":
             CBBA().simulation(nb_tasks, nb_agents, max_t, topology)
         else:
-            CBBA_plot.simulation(nb_tasks, nb_agents, max_t, True, topology)
+            CBBA_plot().simulation(nb_tasks, nb_agents, max_t, True, 2)
