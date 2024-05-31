@@ -27,7 +27,7 @@ CBAAL is a library developed as part of my end-of-year assignment for my first-y
 ## CBAA - Consensus Based Auction Algorithm - Single Task Assignement
 
 ## Video : Breaking down the CBAA
-[![](https://www.youtube.com/watch?v=9TQagFe3QsI/0.jpg)](https://www.youtube.com/watch?v=9TQagFe3QsI)
+[![](https://img.youtube.com/vi/9TQagFe3QsI/0.jpg)](https://www.youtube.com/watch?v=9TQagFe3QsI)
 
 
 
