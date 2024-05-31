@@ -27,11 +27,12 @@ class CBAA_agent():
 
         #local winning bid list
         #list of integer for each task in J
+        # THIS INFORMATION IS SHARED AMONG AGENTS CONNECTED IN THE NETWORK
         self.yj = np.array([-np.inf for _ in range(self.num_of_tasks)])
         
         #agent's bid on a task, which is a score here defined by the euclidean distance
         #it is possible to change the nature of the score to see if it impacts performance
-        self.c = -distance_matrix(self.position, J).squeeze() # tirer un avantage individuel en executant les taches
+        self.c = -distance_matrix(self.position, J).squeeze()
 
         #agent ID
         self.id = id
@@ -44,16 +45,22 @@ class CBAA_agent():
         Selects the task of the valid tasks list hi based on the highest score in the current list of winning bids.
         If an agent has already been assigned, this phase is skipped.
         """
+        # this function is executed for each agents in the environment
+        
+        # if an agent has no assignement (since it's a single task assignment)
         if sum(self.xj)==0:
             #valid tasks list
+            # if there are no bid that would make the task "winnable"
             hi = (self.c > self.yj)
+
+            #if there are any elements equal to 1 i.e. if a task is winnable
             if hi.any():
                 c = copy.deepcopy(self.c)
                 c[hi==False] = -np.inf 
 
-                self.J = np.argmax(c)
-                self.xj[self.J] = 1
-                self.yj[self.J] = self.c[self.J]
+                self.J = np.argmax(c) #the task with the highest bid
+                self.xj[self.J] = 1 #we assign the task to the current agent and hope for the best during phase 2
+                self.yj[self.J] = self.c[self.J] #the winning bid list is updated with the value of the highest bid on the task
 
     def update_task(self, Y=None):
         """Phase 2 of the CBAA Algorithm
@@ -81,7 +88,7 @@ class CBAA_agent():
         all_bids_list = np.vstack((self.yj[None, :], all_bids_list))
 
         #take the maximum value in the bidding list
-        self.yj = all_bids_list.max(0) #axis one the stack
+        self.yj = all_bids_list.max(0) #param 0 : axis zero the stack
 
         # Verify if agents are not outbid
         winner_agent_id = np.argmax(all_bids_list[:,self.J])
@@ -94,7 +101,7 @@ class CBAA_agent():
 
         converged = False
 
-        if x_prev == self.xj:
+        if x_prev == self.xj: #if there has been no change in the environment, no new assignement, then we have converged.
             converged = True
 
         return converged

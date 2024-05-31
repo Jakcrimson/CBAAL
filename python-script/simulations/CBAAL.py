@@ -16,8 +16,6 @@ if "__main__" == __name__:
     parser.add_argument("--viz",             help="If set to gui, displays the GUI viz, if not the plot viz", type=str)
     args = parser.parse_args()
 
-    numpy.random.seed(3)
-
     print(r"""
 
    ____    ____      _         _       _      
