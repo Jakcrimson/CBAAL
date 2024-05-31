@@ -26,6 +26,11 @@ CBAAL is a library developed as part of my end-of-year assignment for my first-y
 
 ## CBAA - Consensus Based Auction Algorithm - Single Task Assignement
 
+## Video : Breaking down the CBAA
+[![](https://img.youtube.com/vi/9TQagFe3QsI/0.jpg)](https://www.youtube.com/watch?v=9TQagFe3QsI)
+
+
+
 According to Choi et Al., the consensus-based auction algorithm (CBAA) is a single assignment strategy that makes use of both auction and consensus. The algorithm consists of iterations between two phases. The first phase of the algorithm is the auction process, while the second is a consensus algorithm that is used to converge on a winning bids list. By iterating between the two, CBAA can exploit convergence properties of decentralized consensus algorithms as well as the robustness and computational efficiency of the auction algorithms.
 
 ### Phase 1 : The Auction process
