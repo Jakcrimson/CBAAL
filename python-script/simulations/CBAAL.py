@@ -5,6 +5,8 @@ from CBAA_simulation_GUI import CBAA
 from CBBA_simulation_GUI import CBBA
 import numpy
 import argparse
+import os
+
 
 if "__main__" == __name__:
     parser = argparse.ArgumentParser(description="Simulation of Single/Multi-Task Assignement in a fleet of robots using Consensus-Based Algorithms")
@@ -50,3 +52,7 @@ CONSENSUS-BASED AUCTION ALGORITHMS LIBRARY
             CBBA().simulation(nb_tasks, nb_agents, max_t, topology)
         else:
             CBBA_plot().simulation(nb_tasks, nb_agents, max_t, True, 2)
+
+    
+
+

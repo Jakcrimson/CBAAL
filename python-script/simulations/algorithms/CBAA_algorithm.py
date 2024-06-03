@@ -4,10 +4,12 @@
 import numpy as np
 from scipy.spatial import distance_matrix
 import copy
+import pykka #library used for the distributed version of the program
 
-
-class CBAA_agent():
+class CBAA_agent(pykka.ThreadingActor): # Threading actor 
     def __init__(self, id=0, J=None):
+        super().__init__()
+
         
         # ADDITIONAL PARAMETERS FOR VISUALIZATION
         #-------------------------------------------------------------------------------------------+
@@ -16,7 +18,7 @@ class CBAA_agent():
         self.position = np.random.uniform(low=0, high=1, size=(1, 2))
         #-------------------------------------------------------------------------------------------+
         
-
+        self.J = J
         #PARAMETERS FROM THE CHOI ET AL. PAPER
         #-------------------------------------------------------------------------------------------+
         self.num_of_tasks = J.shape[0]
@@ -37,6 +39,59 @@ class CBAA_agent():
         #agent ID
         self.id = id
         #-------------------------------------------------------------------------------------------+
+
+
+    def on_receive(self, message):
+        """Handler for multi-agent pool asynchronous execution.
+        Handles the various commands an agent might receive from the main thread (CBAAL simulation).
+
+        Args:
+            message (string): name of the function that the main thread wants the agent to execute
+
+        Returns:
+            returns the result of the agent's execution
+        """
+        command = message.get('command')
+        if command == 'select_task':
+            self.select_task()
+        elif command == 'update_task':
+            Y = message.get('Y')
+            converged = self.update_task(Y)
+            return converged
+        elif command == 'get_position':
+            return self.position
+        elif command == 'send_message_in_neighborhood':
+            return self.send_message_in_neighborhood()
+        elif command == 'get_J':
+            return self.J
+        elif command == 'get_xj':
+            return self.xj
+        return None
+
+    def get_position(self):
+        """Returns the agent's position.
+
+        Returns:
+            tuple: The position of the agent, initialized as a random 2-uple for 2D space coordinates.
+        """
+        return self.position
+
+    def get_J(self):
+        """Returns the task assigned to the agent.
+
+        Returns:
+            int: The index of the task assigned to the agent.
+        """
+        return self.J
+
+    def get_xj(self):
+        """Returns the local task assignment of the agent.
+
+        Returns:
+            list: A list representing the local task assignment of the agent. 
+                Each element indicates whether the agent is assigned to the corresponding task (1) or not (0).
+        """
+        return self.xj
 
         
     def select_task(self):
@@ -61,6 +116,7 @@ class CBAA_agent():
                 self.J = np.argmax(c) #the task with the highest bid
                 self.xj[self.J] = 1 #we assign the task to the current agent and hope for the best during phase 2
                 self.yj[self.J] = self.c[self.J] #the winning bid list is updated with the value of the highest bid on the task
+        return self.xj, self.yj
 
     def update_task(self, Y=None):
         """Phase 2 of the CBAA Algorithm
@@ -115,3 +171,5 @@ class CBAA_agent():
             yj:list -> local winning bid list
         """
         return self.yj.tolist()
+    
+    
