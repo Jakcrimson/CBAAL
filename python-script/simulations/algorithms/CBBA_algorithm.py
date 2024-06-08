@@ -7,8 +7,82 @@ import numpy as np
 import copy
 
 class CBBA_agent():
-  def __init__(self, id = None, vel=None, task_num = None, agent_num = None, L_t = None):
+  """
+    A class to represent an agent in the Consensus-Based Bundle Algorithm (CBBA) for multi-task assignment in a fleet of robots.
 
+    Attributes
+    ----------
+    id : int
+        The unique identifier for the agent.
+    vel : float
+        The velocity of the agent.
+    task_num : int
+        The number of tasks available in the simulation.
+    agent_num : int
+        The number of agents participating in the simulation.
+    z : numpy.ndarray
+        Local winning agent list initialized with the agent's id.
+    y : numpy.ndarray
+        Local winning bid list initialized with zeros.
+    b : list
+        Bundle list for tasks assigned to the agent.
+    p : list
+        Path list for the sequence of tasks.
+    L_t : int
+        Maximum number of tasks an agent can handle.
+    time_step : int
+        Local clock for the agent.
+    s : dict
+        Time stamp list for the agent's updates.
+    position : numpy.ndarray
+        Position of the agent in a 2D space.
+    c : numpy.ndarray
+        Initial score list based on Euclidean distance.
+    Lambda : float
+        Parameter for the score function.
+    c_bar : numpy.ndarray
+        Score function parameters.
+
+    Methods
+    -------
+    tau(j):
+        Estimate the time the agent will take to arrive at task j's location.
+    set_position(position):
+        Set the position of the agent.
+    send_message():
+        Return the local winning bid list, winning agent list, and time stamp list.
+    receive_message(Y):
+        Receive and store messages from neighboring agents.
+    build_bundle(task):
+        Construct bundle and path list with local information.
+    update_task():
+        Update task assignments based on messages received from neighbors and apply CBBA rules.
+    __update(j, y_kj, z_kj):
+        Update the bid and winning agent for task j.
+    __reset(j):
+        Reset the bid and winning agent for task j.
+    __leave():
+        Placeholder for no action.
+    """
+  
+
+  def __init__(self, id = None, vel=None, task_num = None, agent_num = None, L_t = None):
+    """
+      Constructs all the necessary attributes for the CBBA agent.
+
+      Parameters
+      ----------
+      id : int, optional
+          The unique identifier for the agent (default is None).
+      vel : float, optional
+          The velocity of the agent (default is None).
+      task_num : int, optional
+          The number of tasks available in the simulation (default is None).
+      agent_num : int, optional
+          The number of agents participating in the simulation (default is None).
+      L_t : int, optional
+          Maximum number of tasks an agent can handle (default is None).
+    """
     self.task_num = task_num
     self.agent_num = agent_num
     # Agent information
@@ -39,32 +113,79 @@ class CBBA_agent():
     self.c_bar = np.ones(self.task_num)
 
   def tau(self,j):
-    # Estimate time agent will take to arrive at task j's location
-    # This function can be used in later
+    """
+        Estimate the time the agent will take to arrive at task j's location.
+        This function can be used later.
+
+        Parameters
+        ----------
+        j : int
+            The task index.
+
+        Returns
+        -------
+        None
+      """
     pass
 
   def set_position(self, position):
     """
-    Set position of agent
-    """
+        Set the position of the agent.
+
+        Parameters
+        ----------
+        position : numpy.ndarray
+            The new position of the agent in a 2D space.
+
+        Returns
+        -------
+        None
+        """
     self.position = position
 
   def send_message(self):
     """
-    Return local winning bid list
-    [output]
-    y: winning bid list (list:task_num)
-    z: winning agent list (list:task_num)
-    s: Time Stamp List (Dict:{agent_id:update_time})
-    """
+        Return the local winning bid list, winning agent list, and time stamp list.
+
+        Returns
+        -------
+        y : list
+            Local winning bid list.
+        z : list
+            Local winning agent list.
+        s : dict
+            Time stamp list.
+        """
     return self.y.tolist(), self.z.tolist(), self.s
 
   def receive_message(self, Y):
+    """
+        Receive and store messages from neighboring agents.
+
+        Parameters
+        ----------
+        Y : dict
+            Messages from neighboring agents.
+
+        Returns
+        -------
+        None
+    """
+    
     self.Y = Y
 
   def build_bundle(self, task):
     """
-    Construct bundle and path list with local information
+        Construct the bundle and path list with local information.
+
+        Parameters
+        ----------
+        task : list
+            List of task positions.
+
+        Returns
+        -------
+        None
     """
     J = [j for j in range(self.task_num)]
 
@@ -122,9 +243,12 @@ class CBBA_agent():
 
   def update_task(self):
     """
-    [input]
-    Y: winning bid lists from neighbors (dict:{neighbor_id:(winning bid_list, winning agent list, time stamp list)})
-    time: for simulation,
+        Update task assignments based on messages received from neighbors and apply CBBA rules.
+
+        Returns
+        -------
+        converged : bool
+            True if the task assignments have converged, otherwise False.
     """
 
     old_p = copy.deepcopy(self.p)
@@ -294,20 +418,46 @@ class CBBA_agent():
 
   def __update(self, j, y_kj, z_kj):
     """
-    Update values
+        Update the bid and winning agent for task j.
+
+        Parameters
+        ----------
+        j : int
+            Task index.
+        y_kj : float
+            Winning bid for task j.
+        z_kj : int
+            Winning agent for task j.
+
+        Returns
+        -------
+        None
     """
     self.y[j] = y_kj
     self.z[j] = z_kj
 
   def __reset(self, j):
     """
-    Reset values
+        Reset the bid and winning agent for task j.
+
+        Parameters
+        ----------
+        j : int
+            Task index.
+
+        Returns
+        -------
+        None
     """
     self.y[j] = 0
     self.z[j] = -1 # -1 means "none"
 
   def __leave(self):
     """
-    Do nothing
+        Placeholder for no action.
+
+        Returns
+        -------
+        None
     """
     pass

@@ -109,10 +109,11 @@ This notion of belief is important but adds more complexity to the problem. The 
 
 ## Features of the project
 
-- Implementation of CBAA and CBBA algorithms.
+- Implementation of CBAA and CBBA algorithms (Centralized/Sequential implementation using object oriented model).
 - Designed for dynamic load balancing scenarios.
 - Provides a framework for simulating load balancing strategies over various network topologies.
-- Well-documented codebase for easy understanding and modification. 🛠️📝
+- Well-documented codebase for easy understanding and modification. 
+- **Work in progress** : implementation of the algorithms using the actor programming model for decentralized/asynchronous execution 🛠️📝
 
 ## Installation
 
@@ -136,33 +137,23 @@ This notion of belief is important but adds more complexity to the problem. The 
 The program `CBAAL.py` can be executed in command line with fully customizable parameters like so : 
 
 ```bash
- python CBAAL.py cbaa --nb_agents 5 --nb_tasks 20 --max_t 50 --topology 1 --viz gui
+ python .\CBAAL.py cbaa D --nb_agents 20 --nb_tasks 20 --max_t 100 --topology 2 --v
 ```
 
 The parameters are defined as follows: 
 
-```
-usage: CBAAL.py [-h] [--nb_agents NB_AGENTS] [--nb_tasks NB_TASKS]
-                [--max_t MAX_T] [--topology TOPOLOGY] [--viz VIZ]
-                algorithm
 
-Simulation of Single/Multi-Task Assignement in a fleet of robots using
-Consensus-Based Algorithms
+| Parameter     | Description                                                                          | Type    |
+|---------------|--------------------------------------------------------------------------------------|---------|
+| algorithm     | Algorithm to execute (CBAA/CBBA)                                                     | string  |
+| method        | Method (C/D - Centralized/Decentralized)                                             | string  |
+| --nb_agents   | Number of agents in the simulation                                                   | integer |
+| --nb_tasks    | Number of tasks in the simulation                                                    | integer |
+| --max_t       | Maximum iteration                                                                    | integer |
+| --topology    | Network topology [(1)star, (2)fc, (3)ring, (4)mesh, (5)random]                       | integer |
+| --viz         | If set to 'gui', displays the GUI viz, if not, the plot viz                          | string  |
+| --v           | If set to true, adds verbose output, else it doesn't                                  | boolean |
 
-positional arguments:
-  algorithm             Algorithm to execute CBAA/CBBA
-
-options:
-  -h, --help            show this help message and exit
-  --nb_agents NB_AGENTS
-                        number of agents in the simulation
-  --nb_tasks NB_TASKS   number of tasks in the simulation
-  --max_t MAX_T         maximum iteration
-  --topology TOPOLOGY   network topology [(1)star, (2)fc, (3)ring (4)mesh,
-                        (5)random]
-  --viz VIZ             If set to gui, displays the GUI viz, if not the plot
-                        viz
-```
 
 
 ## Documentation

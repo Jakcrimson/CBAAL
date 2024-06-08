@@ -3,7 +3,7 @@
 CBAA is considered to be a specific case of CBBA where the bundle is composed on only one task.
 """
 
-from algorithms.CBAA_algorithm import CBAA_agent
+from CBAA_algorithm import CBAA_agent
 from utils.Task import Task
 from utils.network_topology import Network_Topology
 import matplotlib.pyplot as plt
@@ -15,22 +15,21 @@ import os
 
 np.random.seed(3)
 
-class CBAA_plot:
+class CBAA_plot():
     def __init__(self):
-        print("[+] CBAA Initialized...")
+        print("[+] CBAA Running...")
         
 
     def save_plot_gif(self, phase, ax, save_gif, plot_gap, fig, filenames, t):
         ax.set_title(f"Time Step:{t}, {phase} Process")
-        plt.pause(plot_gap)
         if save_gif:
             filename = f'{t}_{phase}.png'
             filenames.append(filename)
             fig.savefig(filename)
 
 
-    def simulation(self, task_num, agent_num, max_t, save_gif, topology):
-
+    def simulation(self, task_num, agent_num, max_t, save_gif, topology, verbose):
+        self.verbose = verbose
         net = Network_Topology()
         #topology TODO : limit the number of communications between the agents to log(num_agents) or study the KNN communication process
         #  This limits the network topologies that can be used since a connected network is required between the agents in order to route all of the bid information.
@@ -53,12 +52,12 @@ class CBAA_plot:
         task_num = task_num
         agent_num = agent_num
         task = Task(task_num).get_position()
-        agents = [CBAA_agent.start(id=i, J=task) for i in range(agent_num)]          
+        agent_list = [CBAA_agent(id=i, J=task) for i in range(agent_num)]          
         t = 0 # Iteration number             
         assign_plots = []             
         max_t = max_t             
         plot_gap = 0.1             
-        save_gif = save_gif             
+        save_gif = False             
         filenames = []    
         #----------------------------------------------------------------------+
 
@@ -66,8 +65,7 @@ class CBAA_plot:
         ax.set_xlim((-0.1,1.1))
         ax.set_ylim((-0.1,1.1))
         ax.plot(task[:,0],task[:,1],'r^',label="Task")
-        positions = [agent.ask({'command': 'get_position'}) for agent in agents]
-        robot_pos = np.array([pos[0] for pos in positions if pos is not None])
+        robot_pos = np.array([r.position[0].tolist() for r in agent_list])
         ax.plot(robot_pos[:,0],robot_pos[:,1],'go',label="Robot")
         
         for i in range(agent_num-1):
@@ -86,30 +84,32 @@ class CBAA_plot:
                 os.makedirs("my_gif")
 
         while True:
-            print("Number of cores:", os.cpu_count())
             converged_list = []
 
-            print(f"## Iteration {t} ##")
+            if verbose==True:
+                print(f"## Iteration {t} ##")
+                #Phase 1 : Auction process
+                print("\t Phase 1 : Auction")
 
-            #Phase 1 : Auction process
-            print("\t Phase 1 : Auction")
-            for agent_id, agent in enumerate(agents):
-                agent.ask({'command': 'select_task'})
+            for agent in agent_list:
+                agent.select_task()
+
                 #Plot Auction process
                 if t == 0:
-                    assign_line, = ax.plot([agent.ask({'command': 'get_position'})[0][0],task[agent.ask({'command': 'get_J'}),0]],[agent.ask({'command': 'get_position'})[0][1],task[agent.ask({'command': 'get_J'}),1]],'k-',linewidth=1)
+                    assign_line, = ax.plot([agent.position[0][0],task[agent.J,0]],[agent.position[0][1],task[agent.J,1]],'k-',linewidth=1)
                     assign_plots.append(assign_line)
                 else:
-                    assign_plots[agent_id].set_data([agent.ask({'command': 'get_position'})[0][0],task[agent.ask({'command': 'get_J'}),0]],[agent.ask({'command': 'get_position'})[0][1],task[agent.ask({'command': 'get_J'}),1]])
+                    assign_plots[agent_id].set_data([agent.position[0][0],task[agent.J,0]],[agent.position[0][1],task[agent.J,1]])
 
             ## Save plot for gif
-            self.save_plot_gif("Auction", ax, save_gif, plot_gap, fig, filenames, t)
+            # self.save_plot_gif("Auction", ax, save_gif, plot_gap, fig, filenames, t)
 
-            print("\t Phase 2 : Consensus")
+            
+            if verbose == True: print("\t Phase 2 : Consensus")
             #send the winning bid list to neighbors
-            neighboring_msg = [agent.ask({'command': 'send_message_in_neighborhood'}) for agent in agents]
+            neighboring_msg = [agent.send_message_in_neighborhood() for agent in agent_list]
 
-            for agent_id, agent in enumerate(agents):
+            for agent_id, agent in enumerate(agent_list):
                 g = G[agent_id] # connections of the agent that is being visited
                 #find connected agents by the network
                 connected, = np.where(g==1)
@@ -123,17 +123,17 @@ class CBAA_plot:
 
                 #update the local information and task allocation
                 if Y is not None:
-                    converged = agent.ask({'command': 'update_task', 'Y': Y})
+                    converged = agent.update_task(Y)
                     converged_list.append(converged)
 
                 #Plot the consensus process
-                if any(agent.ask({'command':'get_xj'})):
-                    assign_plots[agent_id].set_data([agent.ask({'command': 'get_position'})[0][0],task[agent.ask({'command': 'get_J'}),0]],[agent.ask({'command': 'get_position'})[0][1],task[agent.ask({'command': 'get_J'}),1]])
+                if any(agent.xj):
+                    assign_plots[agent_id].set_data([agent.position[0][0],task[agent.J,0]],[agent.position[0][1],task[agent.J,1]])
                 else:
-                    assign_plots[agent_id].set_data([agent.ask({'command': 'get_position'})[0][0],agent.ask({'command': 'get_position'})[0][0]],[agent.ask({'command': 'get_position'})[0][1],agent.ask({'command': 'get_position'})[0][1]])
+                    assign_plots[agent_id].set_data([agent.position[0][0],agent.position[0][0]],[agent.position[0][1],agent.position[0][1]])
 
             ## Save plot for gif
-            self.save_plot_gif("Consensus", ax, save_gif, plot_gap, fig, filenames, t)
+            # self.save_plot_gif("Consensus", ax, save_gif, plot_gap, fig, filenames, t)
 
             t+=1
             #next iteration
@@ -144,7 +144,7 @@ class CBAA_plot:
             if t>max_t:
                 ax.set_title("Time Step:{}, Max time step overed".format(t))
                 break
-        
+
 
         if save_gif:
             filename = f'./my_gif/{t}_F.png'
@@ -165,8 +165,6 @@ class CBAA_plot:
             for filename in set(filenames):
                 os.remove(filename)
 
-        for agent in agents:
-                agent.stop()
 
         
 

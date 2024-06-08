@@ -38,7 +38,6 @@ class Network_Topology():
         adjacency_matrix[center_node, :] = 1
         adjacency_matrix[:, center_node] = 1
         np.fill_diagonal(adjacency_matrix, 1)
-        node_positions = np.random.uniform(low=0, high=1, size=(1, 2))
         return adjacency_matrix
 
     def get_fully_connected_network_topology(self, num_nodes):
@@ -52,7 +51,6 @@ class Network_Topology():
         - np.ones(...) : Adjacency matrix representing the fully connected network topology.
         """
         adjacency_matrix = np.ones((num_nodes, num_nodes))
-        node_positions = np.random.uniform(low=0, high=1, size=(1, 2))
 
         return adjacency_matrix
 
@@ -71,28 +69,7 @@ class Network_Topology():
             adjacency_matrix[i, (i + 1) % num_nodes] = 1
             adjacency_matrix[(i + 1) % num_nodes, i] = 1
         np.fill_diagonal(adjacency_matrix, 1)
-        # Generate arbitrary node positions
-        node_positions = np.random.uniform(low=0, high=1, size=(1, 2))
     
-        return adjacency_matrix
-
-    def get_mesh_network_topology(self, num_nodes):
-        """
-        Generates a mesh network topology adjacency matrix.
-
-        Args:
-        - num_nodes (int): Number of nodes in the network.
-
-        Returns:
-        - adjacency_matrix (ndarray): Adjacency matrix representing the mesh network topology.
-        """
-        adjacency_matrix = np.zeros((num_nodes, num_nodes), dtype=int)
-        for i in range(num_nodes):
-            for j in range(num_nodes):
-                if i != j:
-                    adjacency_matrix[i, j] = 1
-        np.fill_diagonal(adjacency_matrix, 1)
-        node_positions = np.random.uniform(low=0, high=1, size=(1, 2))
         return adjacency_matrix
 
     def get_random_network_topology(self, num_nodes, density):
@@ -101,7 +78,7 @@ class Network_Topology():
 
         Args:
         - num_nodes (int): Number of nodes in the network.
-        - density (float): Density of connections in the network (between 0 and 1).
+        - density (float): Density of connections created in the network (between 0 and 1).
 
         Returns:
         - adjacency_matrix (ndarray): Adjacency matrix representing the random network topology.
@@ -111,5 +88,4 @@ class Network_Topology():
         adjacency_matrix[adjacency_matrix > threshold] = 0
         adjacency_matrix[adjacency_matrix <= threshold] = 1
         np.fill_diagonal(adjacency_matrix, 0)
-        node_positions = np.random.uniform(low=0, high=1, size=(1, 2))
         return adjacency_matrix
