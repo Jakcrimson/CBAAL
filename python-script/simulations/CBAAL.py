@@ -24,7 +24,7 @@ if "__main__" == __name__:
     parser.add_argument("--nb_tasks",         help="number of tasks in the simulation", type=int)
     parser.add_argument("--max_t",           help="maximum iteration", type=int)
     parser.add_argument("--topology",        help="network topology [(1)star, (2)fc, (3)ring (4)mesh, (5)random]", type=int)
-    parser.add_argument("--viz",             help="If set to gui, displays the GUI viz, if not the plot viz", type=str)
+    parser.add_argument("--viz",             help="If set, saves a gif of the simulation in the folder 'my_gif'", action="store_true")
     parser.add_argument("--v",               help="If set to true, adds verbose, else it doesn't", action="store_true")
     args = parser.parse_args()
 
@@ -52,31 +52,16 @@ CONSENSUS-BASED AUCTION ALGORITHMS LIBRARY
     verbose = args.v
     method = args.method
 
-    start_time = time.time()
-
     if algo == "cbaa":
-        if viz == "gui":
-            if method == "C":
-                CBAA().simulation(nb_tasks, nb_agents, max_t, topology, verbose)
-            elif method == "D":
-                pass
-                # simulation = Agent_Solver(nb_agents, nb_tasks, topology)
-                # asyncio.run(simulation.run_simulation())
-                # results = asyncio.run(simulation.get_results())
-        else:
-            if method == "C":
-                CBAA_plot().simulation(nb_tasks, nb_agents, max_t, True, 2, verbose)
-            elif method == "D":
-                pass
-                # simulation = Agent_Solver(nb_agents, nb_tasks, topology, False)
-                # asyncio.run(simulation.run_simulation())
-                # results = asyncio.run(simulation.get_results())
+        if method == "C":
+            CBAA_plot().simulation(nb_tasks, nb_agents, max_t, viz, 2, verbose)
+        elif method == "D":
+            pass
+            # simulation = Agent_Solver(nb_agents, nb_tasks, topology, False)
+            # asyncio.run(simulation.run_simulation())
+            # results = asyncio.run(simulation.get_results())
     else:
-        if viz == "gui":
-            CBBA().simulation(nb_tasks, nb_agents, max_t, topology, verbose)
-        else:
-            CBBA_plot().simulation(nb_tasks, nb_agents, max_t, True, 2, verbose)
+        CBBA_plot().simulation(nb_tasks, nb_agents, max_t, True, 2, verbose)
 
-    print("TOTAL EXECUTION TIME : ",time.time() - start_time)
 
 

@@ -137,7 +137,7 @@ This notion of belief is important but adds more complexity to the problem. The 
 The program `CBAAL.py` can be executed in command line with fully customizable parameters like so : 
 
 ```bash
- python .\CBAAL.py cbaa D --nb_agents 20 --nb_tasks 20 --max_t 100 --topology 2 --v
+ python python-script\simulations\CBAAL.py cbaa D --nb_agents 20 --nb_tasks 20 --max_t 100 --topology 2 --v
 ```
 
 The parameters are defined as follows: 
@@ -151,8 +151,8 @@ The parameters are defined as follows:
 | --nb_tasks    | Number of tasks in the simulation                                                    | integer |
 | --max_t       | Maximum iteration                                                                    | integer |
 | --topology    | Network topology [(1)star, (2)fc, (3)ring, (4)mesh, (5)random]                       | integer |
-| --viz         | If set to 'gui', displays the GUI viz, if not, the plot viz                          | string  |
-| --v           | If set to true, adds verbose output, else it doesn't                                  | boolean |
+| --viz         | If set, saves the gif od the simulation in the folder 'my_gif', else saves nothing.  | string  |
+| --v           | If set to true, adds verbose output, else it doesn't                                 | boolean |
 
 
 
