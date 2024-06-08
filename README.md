@@ -62,7 +62,7 @@ During phase 1 of the algorithm, each agent continuously adds tasks to its bundl
    - the bundle $b_i$, tasks are ordered based on which ones were first added.
    - the path $p_i$, tasks are ordered based on their location in the assignement.
 
-The authors define $S_i^{p_i} the total reward value for the agent $i$ performing the tasks along the path $p_i$. They also mention the notion of marginal score improvement when a task is added to the bundle, which we will not discuss here. In the end, each agent carries four vectors: 
+The authors define $S_i^{p_i}$ the total reward value for the agent $i$ performing the tasks along the path $p_i$. They also mention the notion of marginal score improvement when a task is added to the bundle, which we will not discuss here. In the end, each agent carries four vectors: 
 - a winning bid list $y_i \in \mathbb{R}_+^{N_t}$
 - a winning agent list $z_i \in \mathbb{I}^{N_t}$
 - a bundle $b_i \in (\mathbb{J} \bigcup \{\emptyset \})^{L_t}$
@@ -73,15 +73,15 @@ If a task $j$ is added to the bundle, it incurs the marginal score improvement o
 - $c_{ij}[b_i]$ = 0 if the task $j$ is already in the bundle $b_i$.
 - $c_{ij}[b_i] =  max_{n \leq |p_i|} S_{i}^{p_i \oplus _n\{j\}} - S_{i}^{p_i} \text { otherwise }$
 
-In other words, the CBBA scoring scheme inserts a new task to the location tha incurs the largest score improvement **after** the task was inserted in the bundle vs before it was inserted, and this value becomes the marginal score associated to that task given the current path. Naturally, if the task is already in the path, then it brings no improvement in score.
+In other words, the CBBA scoring scheme inserts a new task to the location that incurs the largest score improvement **after** the task was inserted in the bundle vs before it was inserted, and this value becomes the marginal score associated to that task given the current path. Naturally, if the task is already in the path, then it brings no improvement in score.
 
 The score function is initialized as $S_i^{\{\emptyset\}}$ = 0, while the path $p_i$ and bundle $b_i$ are recursively updated as 
 
 $$b_i = b_i \oplus _{end} \{J_i\}, p_i = p_i \oplus _{n_i, J_i} \{J_i\}$$
 where :
 - $J_i = argmax (c_{ij[b_i]} \times h_{ij})$ -> the index of the task that maximizes the score improvement.
-- $n_{i,J_i} = argmax_n S_i^{p_i \oplus _n \{J_i\}}$ -> the index of at which the task to be added maximises the marginal score.
-- $h_{ij} = \mathbb{I}(c_{ij} > y_{ij})$ the valid tasks list, as defined earlier.
+- $n_{i,J_i} = argmax_n S_i^{p_i \oplus _n \{J_i\}}$ -> the index of the path at which the task to be added maximises the marginal score.
+- $h_{ij} = \mathbb{I}(c_{ij} > y_{ij})$ the valid tasks list, as defined earlier in CBAA.
 
 The recursion continues until one of the following conditions is reached :
 - either $|b_i| = L_t$ -> reached maximum assignement number
@@ -94,7 +94,7 @@ In CBBA, each agent needs information about not only whether or not it is outbid
 In CBAA, agents bid on a single task and release it upon receiving a higher value in the winning bids list. On the contrary, in CBBA, agents add tasks to their bundle based on their currently assigned task set. Suppose that an agent is outbid for a task and thus releases it; then, the marginal score
 values for the tasks added to the bundle after this task are no longer valid. Therefore, the agent also needs to release all the tasks added after the outbid task. Otherwise, the agent will make further decisions based on wrong score values, which may lead to poor performance.
 
-In the multi-assignment consensus stage, three vectors are communicated for consensus. Two were described in the bundle construction phase: the winning bids list $y_i$ Nt and the winning agent list $z_i$. The third vector $s_i \in \mathbb{R}^{N_u}, with $N_u$ the number of agents, represents the time stamp of the last information update from each of the other agents. Each time a message is passed, the time vector is populated with
+In the multi-assignment consensus stage, three vectors are communicated for consensus. Two were described in the bundle construction phase: the winning bids list $y_i$ and the winning agent list $z_i$. The third vector $s_i \in \mathbb{R}^{N_u}$, with $N_u$ the number of agents, represents the time stamp of the last information update from each of the other agents. Each time a message is passed, the time vector is populated with
 
 - $s_{i k}= \tau_r \text { if } g_{i k}=1$
 - $s_{ik}= max_{m: g_{i m}=1} s_{m k}\text { otherwise }$

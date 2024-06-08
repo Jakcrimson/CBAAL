@@ -1,8 +1,6 @@
 
 from CBAA_sim import CBAA_plot
 from CBBA_sim import CBBA_plot
-from CBAA_simulation_GUI import CBAA
-from CBBA_simulation_GUI import CBBA
 import numpy
 import asyncio
 import argparse
@@ -10,11 +8,7 @@ import os
 import time
 
 
- ## TODO : ADD CENTRALIZED OU DECENTRALIZED POUR OPTION DE LANCEMENT -> OK
- ## TODO : EXPLIQUER LES ALGO POUR LES TOPOLOGIES -> OK
- ## TODO : VERBOSE -> OK
- ## TODO : TIMER ET ENLEVER L'OPTION DE VIZ POUR AVOIR JUSTE LE TEMPS ET PAS LA GUI CHIANTE -> OK
- ## TODO : UTILISER LA PROGRAMMATION PAR ACTEUR -> deux classes, acteur solver et acteurs worker -> until les worker ont tous renvoyé stop. -> TODO
+ ## TODO : UTILISER LA PROGRAMMATION PAR ACTEUR -> deux classes, acteur solver et acteurs worker -> until les worker ont tous renvoyé stop
 
 if "__main__" == __name__:
     parser = argparse.ArgumentParser(description="Simulation of Single/Multi-Task Assignement in a fleet of robots using Consensus-Based Algorithms")
@@ -39,7 +33,7 @@ U /"___|U | __")uU  /"\  u U  /"\  u  |"|
 (__)(__)(__) (__)(__)  (__)(__)  (__)(_")("_) 
           
 CONSENSUS-BASED AUCTION ALGORITHMS LIBRARY
-          by. Pierre LAGUE
+        by. Pierre LAGUE, Version 0.0
 """)
     
     # CBAAL.py -cbba/cbaa -nb_tasks -nb_agents -net_topo -gui/plot
@@ -56,12 +50,14 @@ CONSENSUS-BASED AUCTION ALGORITHMS LIBRARY
         if method == "C":
             CBAA_plot().simulation(nb_tasks, nb_agents, max_t, viz, 2, verbose)
         elif method == "D":
-            pass
+            print("[+] The decentralized option is work in progress...")
             # simulation = Agent_Solver(nb_agents, nb_tasks, topology, False)
             # asyncio.run(simulation.run_simulation())
             # results = asyncio.run(simulation.get_results())
     else:
-        CBBA_plot().simulation(nb_tasks, nb_agents, max_t, True, 2, verbose)
-
+        if method == "C":
+            CBBA_plot().simulation(nb_tasks, nb_agents, max_t, viz, 2, verbose)
+        elif method == "D":
+            print("[+] The decentralized option is work in progress...")
 
 

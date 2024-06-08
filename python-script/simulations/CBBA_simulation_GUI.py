@@ -10,6 +10,26 @@ class CBBA:
         print("[+] CBBA Initialized...")
 
     def simulation(self, task_num, agent_num, max_t, topology):
+        """
+        Runs the simulation of the CBBA algorithm with the specified parameters.
+
+        Parameters
+        ----------
+        task_num : int
+            The number of tasks in the simulation.
+        agent_num : int
+            The number of agents in the simulation.
+        max_t : int
+            The maximum number of iterations.
+        save_gif : bool
+            If True, save the simulation as a GIF.
+        topology : int
+            The network topology to use (1: star, 2: fully connected, 3: ring, 4: mesh, 5: random).
+
+        Returns
+        -------
+        None
+        """
         net = Network_Topology()
         #topology TODO : limit the number of communications between the agents to log(num_agents) or study the KNN communication process
         #  This limits the network topologies that can be used since a connected network is required between the agents in order to route all of the bid information.

@@ -96,24 +96,24 @@ class CBAA_plot():
         plot_gap = 0.1             
         filenames = []    
 
-        fig, ax = plt.subplots()
-        ax.set_xlim((-0.1,1.1))
-        ax.set_ylim((-0.1,1.1))
-        ax.plot(task[:,0], task[:,1], 'r^', label="Task")
-        robot_pos = np.array([r.position[0].tolist() for r in agent_list])
-        ax.plot(robot_pos[:,0], robot_pos[:,1], 'go', label="Robot")
-        
-        for i in range(agent_num-1):
-            for j in range(i+1, agent_num):
-                if G[i][j] == 1:
-                    ax.plot([robot_pos[i][0], robot_pos[j][0]], [robot_pos[i][1], robot_pos[j][1]], 'g--', linewidth=0.2)
-
-        handles, labels = ax.get_legend_handles_labels()
-        custom_line = Line2D([0], [0], color="g", linestyle="--", label="communication")
-        handles.append(custom_line)
-        ax.legend(handles=handles)
-
         if save_plot:
+            fig, ax = plt.subplots()
+            ax.set_xlim((-0.1,1.1))
+            ax.set_ylim((-0.1,1.1))
+            ax.plot(task[:,0], task[:,1], 'r^', label="Task")
+            robot_pos = np.array([r.position[0].tolist() for r in agent_list])
+            ax.plot(robot_pos[:,0], robot_pos[:,1], 'go', label="Robot")
+            
+            for i in range(agent_num-1):
+                for j in range(i+1, agent_num):
+                    if G[i][j] == 1:
+                        ax.plot([robot_pos[i][0], robot_pos[j][0]], [robot_pos[i][1], robot_pos[j][1]], 'g--', linewidth=0.2)
+
+            handles, labels = ax.get_legend_handles_labels()
+            custom_line = Line2D([0], [0], color="g", linestyle="--", label="communication")
+            handles.append(custom_line)
+            ax.legend(handles=handles)
+
             if not os.path.exists("my_gif"):
                 os.makedirs("my_gif")
 
@@ -127,15 +127,16 @@ class CBAA_plot():
 
             for agent in agent_list:
                 agent.select_task()
+                if save_plot:
 
-                if t == 0:
-                    assign_line, = ax.plot([agent.position[0][0], task[agent.J,0]], [agent.position[0][1], task[agent.J,1]], 'k-', linewidth=1)
-                    assign_plots.append(assign_line)
-                else:
-                    assign_plots[agent.id].set_data([agent.position[0][0], task[agent.J,0]], [agent.position[0][1], task[agent.J,1]])
+                    if t == 0:
+                        assign_line, = ax.plot([agent.position[0][0], task[agent.J,0]], [agent.position[0][1], task[agent.J,1]], 'k-', linewidth=1)
+                        assign_plots.append(assign_line)
+                    else:
+                        assign_plots[agent.id].set_data([agent.position[0][0], task[agent.J,0]], [agent.position[0][1], task[agent.J,1]])
 
-            if save_plot:
-                self.save_plot_gif("Auction", ax, save_plot, fig, filenames, t)
+            
+                    self.save_plot_gif("Auction", ax, save_plot, fig, filenames, t)
 
             if verbose:
                 print("\t Phase 2 : Consensus")
@@ -156,22 +157,24 @@ class CBAA_plot():
                 if Y is not None:
                     converged = agent.update_task(Y)
                     converged_list.append(converged)
+                if save_plot:
+                    if any(agent.xj):
+                        assign_plots[agent_id].set_data([agent.position[0][0], task[agent.J,0]], [agent.position[0][1], task[agent.J,1]])
+                    else:
+                        assign_plots[agent_id].set_data([agent.position[0][0], agent.position[0][0]], [agent.position[0][1], agent.position[0][1]])
 
-                if any(agent.xj):
-                    assign_plots[agent_id].set_data([agent.position[0][0], task[agent.J,0]], [agent.position[0][1], task[agent.J,1]])
-                else:
-                    assign_plots[agent_id].set_data([agent.position[0][0], agent.position[0][0]], [agent.position[0][1], agent.position[0][1]])
-
-            if save_plot:
-                self.save_plot_gif("Consensus", ax, save_plot, fig, filenames, t)
+                
+                    self.save_plot_gif("Consensus", ax, save_plot, fig, filenames, t)
 
             t += 1
 
             if sum(converged_list) == agent_num:
-                ax.set_title(f"Time Step:{t}, Converged!")
+                if save_plot:
+                    ax.set_title(f"Time Step:{t}, Converged!")
                 break
             if t > max_t:
-                ax.set_title(f"Time Step:{t}, Max time step overed")
+                if save_plot:
+                    ax.set_title(f"Time Step:{t}, Max time step overed")
                 break
 
         if save_plot:

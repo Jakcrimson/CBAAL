@@ -9,7 +9,6 @@
 /python-script/simulations/utils/__pycache__
 /python-script/simulations/my_gif
 /python-script/simulations/decentralized
-/python-script/simulations/CBAA_simulation_GUI.py
-/python-script/simulations/CBBA_simulation_GUI.py
+/python-script/simulations/*GUI*
 /.vscode/
 /python-script/__pycache__
