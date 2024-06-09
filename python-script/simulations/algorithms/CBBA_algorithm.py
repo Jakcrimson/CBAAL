@@ -1,6 +1,5 @@
 """
 @new version : Pierre Lague
-@old version : keep9oing
 """
 
 import numpy as np
