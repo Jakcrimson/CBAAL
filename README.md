@@ -105,7 +105,47 @@ where $\tau _r$ id the message reception time. When agent $i$ receives a message
 - reset: $y_{ij} = 0$, $z_{ij} = \emptyset $
 - leave: $y_{ij} = y_{ij}$, $z_{ij} = z_{ij}$ -> the agent doesn't take the new task
 
-This notion of belief is important but adds more complexity to the problem. The authors define 17 decision rules based on the situation an agent might find itself in. If a bid is changed by the decision rules in Table I, each agent checks if any of the updated or reset tasks were in their bundle, and if so, those tasks, along with all of the tasks that were added to the bundle after them, are released. From here, the algorithm returns to the first phase and new tasks are added
+This notion of belief is important but adds more complexity to the problem. The authors define 17 decision rules based on the situation an agent might find itself in. If a bid is changed by the decision rules in Table I, each agent checks if any of the updated or reset tasks were in their bundle, and if so, those tasks, along with all of the tasks that were added to the bundle after them, are released. From here, the algorithm returns to the first phase and new tasks are added.
+
+In the Consensus-Based Bundle Algorithm (CBBA), the rules for consensus are designed to ensure that all agents agree on the assignment of tasks through a series of communication and update steps. Each agent maintains its own list of winning bids and the corresponding agents for each task, as well as timestamps for when the last updates occurred. The rules for consensus determine how an agent updates its local information based on the information received from neighboring agents. Here are the rules used in the CBBA:
+
+### Rule-Based Update Process
+
+1. **Rule 1:** If an agent receives a message indicating that another agent has a higher bid for a task (or a tie with a lower agent ID as a tie-breaker) than its own bid, it updates its local information to reflect the new winning bid and agent.
+
+2. **Rule 2:** If an agent receives a message indicating that the task winner is the same agent as it has in its local list, it updates its local information to reflect the new winning bid and agent.
+
+3. **Rule 3:** If an agent receives a message indicating that another agent has a higher bid for a task than another agent’s bid that it knows about, it updates its local information to reflect the new winning bid and agent.
+
+4. **Rule 4:** If an agent receives a message indicating that a task is unassigned (no winner), it updates its local information to reflect the task as unassigned.
+
+5. **Rule 5:** If an agent receives a message indicating that it is the winning agent for a task, and its local information agrees, it takes no action.
+
+6. **Rule 6:** If an agent receives a message indicating that it is not the winning agent for a task, it resets its bid and winner information for that task.
+
+7. **Rule 7:** If an agent receives a message indicating that another agent is the winning agent for a task, and that agent's bid is higher than any known bids, it updates its local information to reflect the new winning bid and agent.
+
+8. **Rule 8:** If an agent receives a message indicating that a task is unassigned (no winner), and its local information agrees, it takes no action.
+
+9. **Rule 9:** If an agent receives a message indicating that another agent has a higher bid for a task than its own, and the timestamp indicates a more recent update, it updates its local information to reflect the new winning bid and agent.
+
+10. **Rule 10:** If an agent receives a message indicating that another agent has a higher bid for a task than another agent’s bid that it knows about, and the timestamp indicates a more recent update, it updates its local information to reflect the new winning bid and agent.
+
+11. **Rule 11:** If an agent receives a message indicating that another agent has a higher bid for a task than its own, and the timestamp indicates a more recent update, it updates its local information to reflect the new winning bid and agent.
+
+12. **Rule 12:** If an agent receives a message indicating that another agent has a higher bid for a task than its own, and the timestamp indicates a more recent update, it updates its local information to reflect the new winning bid and agent.
+
+13. **Rule 13:** If an agent receives a message indicating that another agent has a higher bid for a task than its own, and the timestamp indicates a more recent update, it updates its local information to reflect the new winning bid and agent.
+
+14. **Rule 14:** If an agent receives a message indicating that another agent has a higher bid for a task than its own, and the timestamp indicates a more recent update, it updates its local information to reflect the new winning bid and agent.
+
+15. **Rule 15:** If an agent receives a message indicating that a task is unassigned (no winner), and its local information indicates a different winner, it resets its bid and winner information for that task.
+
+16. **Rule 16:** If an agent receives a message indicating that another agent has a higher bid for a task than its own, and the timestamp indicates a more recent update, it updates its local information to reflect the new winning bid and agent.
+
+17. **Rule 17:** If an agent receives a message indicating that a task is unassigned (no winner), and its local information agrees, it takes no action.
+
+The CBBA rules ensure that agents update their local information based on the most recent and highest bids for tasks. This process involves comparing bids, timestamps, and applying tie-breaking rules when necessary. The goal is to reach a consensus where all agents agree on the assignment of tasks, ensuring that the best bids are used and tasks are efficiently allocated among the agents.
 
 ## Features of the project
 
