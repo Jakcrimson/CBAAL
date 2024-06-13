@@ -1,6 +1,9 @@
 """
 @new version : Pierre Lague
 """
+
+# TODO : CHANGE J NAME TO TASKS !!!!!!! TODO TODO 
+
 import numpy as np
 from scipy.spatial import distance_matrix
 import copy
@@ -67,7 +70,7 @@ class CBAA_agent(pykka.ThreadingActor): # Threading actor
         return self.xj
 
         
-    def select_task(self):
+    def select_task(self): #TODO : SINGATURE !!!
         """Phase 1 of the CBAA Algorithm
         Acts for the allocation of tasks for an agent.
         Selects the task of the valid tasks list hi based on the highest score in the current list of winning bids.
